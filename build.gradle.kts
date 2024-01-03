@@ -20,6 +20,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("io.hypersistence:hypersistence-utils-hibernate-63:3.7.0")
     implementation("com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:2.16.1")
+    implementation("org.hibernate.orm:hibernate-core:6.4.1.Final")
 
     runtimeOnly("org.postgresql:postgresql")
 
