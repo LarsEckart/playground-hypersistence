@@ -10,9 +10,13 @@ interface EventRepository extends JpaRepository<Event, Long> {
 
   List<Event> findByEventName(String eventName);
 
+  /**
+   * Causes one select to find all events but then does a delete for each event. :D
+   * When we add the nativeQuery, it works as expected.
+   */
   @Modifying
   @Transactional
-    // @Query(nativeQuery = true, value = "DELETE FROM EVENT WHERE created_time<?1")
+  // @Query(nativeQuery = true, value = "DELETE FROM EVENT WHERE created_time<?1")
   void deleteAllByCreatedTimeBefore(LocalDateTime dateTime);
 
 }
