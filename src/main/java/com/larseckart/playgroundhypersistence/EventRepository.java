@@ -19,4 +19,24 @@ interface EventRepository extends JpaRepository<Event, Long> {
   // @Query(nativeQuery = true, value = "DELETE FROM EVENT WHERE created_time<?1")
   void deleteAllByCreatedTimeBefore(LocalDateTime dateTime);
 
+  /**
+   * DELETE is (and isn't) what you expect
+   * * initially a SELECT, eventually a DELETE
+
+   * * A JPA provider is allowed to delay operations on the database
+   *   to potentially batch those up to potentially gain performance benefits.
+   *   <a href="https://github.com/spring-projects/spring-data-jpa/issues/1100">...</a>
+   *   Hibernate executes them in a special way (so foreign-key constraints cannot be violated)
+   *     Inserts, in the order they were performed
+   *     Updates
+   *     Deletion of collection elements
+   *     Insertion of collection elements
+   *     Deletes, in the order they were performed
+   *  * using a custom-query by-passes this logic (and executes it in the order it is defined in code)
+   */
+  @Modifying
+  @Transactional
+  //@Query(nativeQuery = true, value = "DELETE FROM event WHERE event_name = :eventName")
+  void deleteAllByEventName(String eventName);
+
 }

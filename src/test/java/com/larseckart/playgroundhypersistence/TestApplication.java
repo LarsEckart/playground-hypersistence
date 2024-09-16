@@ -2,6 +2,7 @@ package com.larseckart.playgroundhypersistence;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.IntStream;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -53,6 +54,23 @@ public class TestApplication {
       repository.saveAll(days);
 
       repository.deleteAllByCreatedTimeBefore(LocalDateTime.now());
+    };
+  }
+
+  @Bean
+  public CommandLineRunner transactionOrder(EventService eventService) {
+    return args -> {
+
+      LocalDateTime now = LocalDateTime.now();
+      eventService.save(new Event("test", now));
+      //tx.commit - from service-layer
+
+      var eventList = List.of(
+          new Event("test", now),
+          new Event("test", now.plusMinutes(1))
+      );
+      eventService.replaceALl("test", eventList);
+
     };
   }
 
