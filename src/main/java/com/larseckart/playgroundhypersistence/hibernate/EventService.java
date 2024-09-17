@@ -1,4 +1,4 @@
-package com.larseckart.playgroundhypersistence;
+package com.larseckart.playgroundhypersistence.hibernate;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 @Service
-@Transactional
 public class EventService {
+
     private final EventRepository eventRepository;
 
     public EventService(EventRepository eventRepository) {
@@ -19,8 +19,9 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    public void replaceALl(String eventName, List<Event> events) {
-        eventRepository.deleteAllByEventName(eventName);
+    @Transactional
+    public void replaceALl(List<Event> events) {
+        eventRepository.deleteAll();
         eventRepository.saveAll(events);
     }
 }

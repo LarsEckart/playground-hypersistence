@@ -1,12 +1,11 @@
-package com.larseckart.playgroundhypersistence;
+package com.larseckart.playgroundhypersistence.hibernate;
 
-import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 
-interface EventRepository extends JpaRepository<Event, Long> {
+public interface EventRepository extends JpaRepository<Event, Long> {
 
   List<Event> findByEventName(String eventName);
 
@@ -15,7 +14,6 @@ interface EventRepository extends JpaRepository<Event, Long> {
    * When we add the nativeQuery, it works as expected.
    */
   @Modifying
-  @Transactional
   // @Query(nativeQuery = true, value = "DELETE FROM EVENT WHERE created_time<?1")
   void deleteAllByCreatedTimeBefore(LocalDateTime dateTime);
 
@@ -35,8 +33,7 @@ interface EventRepository extends JpaRepository<Event, Long> {
    *  * using a custom-query by-passes this logic (and executes it in the order it is defined in code)
    */
   @Modifying
-  @Transactional
-  //@Query(nativeQuery = true, value = "DELETE FROM event WHERE event_name = :eventName")
-  void deleteAllByEventName(String eventName);
+  // @Query(nativeQuery = true, value = "DELETE FROM event")
+  void deleteAll();
 
 }

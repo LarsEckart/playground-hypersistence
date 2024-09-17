@@ -1,4 +1,4 @@
-package com.larseckart.playgroundhypersistence;
+package com.larseckart.playgroundhypersistence.jsonb;
 
 import java.io.Serializable;
 

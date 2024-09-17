@@ -1,8 +1,9 @@
 package com.larseckart.playgroundhypersistence;
 
+import com.larseckart.playgroundhypersistence.hibernate.Event;
+import com.larseckart.playgroundhypersistence.hibernate.EventRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.stream.IntStream;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -39,39 +40,4 @@ public class TestApplication {
   //                 List.of(song)));
   //     };
   // }
-
-  @Bean
-  public CommandLineRunner demo2(EventRepository repository) {
-    return (args) -> {
-
-      LocalDate now = LocalDate.now();
-
-      var days = IntStream.iterate(0, i -> i + 1)
-          .limit(100)
-          .mapToObj(i -> new Event("any", now.minusDays(i).atStartOfDay()))
-          .toList();
-
-      repository.saveAll(days);
-
-      repository.deleteAllByCreatedTimeBefore(LocalDateTime.now());
-    };
-  }
-
-  @Bean
-  public CommandLineRunner transactionOrder(EventService eventService) {
-    return args -> {
-
-      LocalDateTime now = LocalDateTime.now();
-      eventService.save(new Event("test", now));
-      //tx.commit - from service-layer
-
-      var eventList = List.of(
-          new Event("test", now),
-          new Event("test", now.plusMinutes(1))
-      );
-      eventService.replaceALl("test", eventList);
-
-    };
-  }
-
 }

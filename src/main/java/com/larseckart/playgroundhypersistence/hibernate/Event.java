@@ -1,4 +1,4 @@
-package com.larseckart.playgroundhypersistence;
+package com.larseckart.playgroundhypersistence.hibernate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

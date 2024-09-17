@@ -1,4 +1,4 @@
-package com.larseckart.playgroundhypersistence;
+package com.larseckart.playgroundhypersistence.jsonb;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

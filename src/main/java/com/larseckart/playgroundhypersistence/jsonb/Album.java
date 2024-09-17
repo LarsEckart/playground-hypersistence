@@ -1,4 +1,4 @@
-package com.larseckart.playgroundhypersistence;
+package com.larseckart.playgroundhypersistence.jsonb;
 
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
